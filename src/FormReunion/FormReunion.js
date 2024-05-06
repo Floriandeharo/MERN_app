@@ -27,9 +27,6 @@ const FormReunion = ({ room = {} }) => {
   const updateRoom = (newRoom) => {
     setRoomState(newRoom);
   };
-  // const show = () => {
-  //     toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
-  // };
   useEffect(() => {
     // Chargez les utilisateurs lorsque le composant est monté
     fetchUsers()
@@ -44,18 +41,6 @@ const FormReunion = ({ room = {} }) => {
       });
   }, []);
 
-  
-  // useEffect(() => {
-  //   // Chargez les utilisateurs lorsque le composant est monté
-  //   creerReunion(duration, subject, room._id)
-  //     .then(data => {
-  //       // Stockez les utilisateurs récupérés dans l'état
-  //       console.log('Reunion created:', data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Erreur lors de la récupération des utilisateurs:', error);
-  //     });
-  // }, []);
 
 
   // Fonction de filtrage pour l'autocomplete
