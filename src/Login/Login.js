@@ -9,11 +9,12 @@ const LoginComponent = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post('http://localhost:3001/login', { email, password });
+      const response = await axios.post('http://localhost:3001/user/login', { email, password });
       const { token, userId } = response.data;
 
       // Stockez le token JWT dans le stockage local ou dans un autre endroit sûr
       localStorage.setItem('token', token);
+      localStorage.setItem('userId', userId);
 
       // Utilisez le token pour effectuer des requêtes authentifiées
       // Par exemple, vous pouvez l'envoyer dans l'en-tête Authorization lors des futures requêtes
@@ -21,6 +22,7 @@ const LoginComponent = () => {
 
       // Redirigez l'utilisateur vers une autre page ou effectuez toute autre action nécessaire
       console.log('Login successful');
+      window.location.reload(); // Reload the page
     } catch (error) {
       console.error('Login failed:', error);
     }

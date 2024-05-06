@@ -11,7 +11,7 @@ import { fetchUsers } from '../services/UserService';
 import {creerReunion} from '../services/ReunionService';
 import {addUserReunion} from '../services/ReunionUserService';
 import { InputNumber } from 'primereact/inputnumber';
-        
+
 const FormReunion = ({ room = {} }) => {
   const [users, setUsers] = useState([]); // État pour stocker les utilisateurs récupérés
   const [filteredUsers, setFilteredUsers] = useState([]); // État pour stocker les utilisateurs filtrés par l'autocomplete
@@ -21,6 +21,7 @@ const FormReunion = ({ room = {} }) => {
   const [duration, setDuration] = useState(null);
   const toast = useRef(null);
   const [roomState, setRoomState] = useState(room);
+  const [reunionId, setReunionId] = useState(null);
 
   // Utilisez setRoomState pour mettre à jour la variable roomState
   const updateRoom = (newRoom) => {
@@ -92,16 +93,20 @@ const FormReunion = ({ room = {} }) => {
     const handleSubmit = (e) => {
       e.preventDefault();
 
-      creerReunion(subject, duration,  room._id)
+      creerReunion(subject, duration,  room._id, date)
       .then(data => {
         // Stockez les utilisateurs récupérés dans l'état
         console.log('Reunion created:', data);
+        selectedUsers.forEach(user => {
+          addUserReunion(user._id, data.id_reunion);
+        });
+        
       })
       .catch(error => {
         console.error('Erreur lors de la récupération des utilisateurs:', error);
       });
 
-      toast.current.show({ severity: 'info', summary: 'Info', detail: 'Message Content' });
+      toast.current.show({ severity: 'success', summary: '', detail: 'Reunion crée' });
 
       console.log('Form submitted',e);
       console.log('Form data:', selectedUsers);
@@ -169,7 +174,7 @@ const FormReunion = ({ room = {} }) => {
             <Toast ref={toast} />
             <div className="form-group text-end">
 
-            <button type="submit" className="btn mt-3 btn-primary">Soumettre</button>
+            <button type="submit" className="btn mt-3 btn-primary" >Soumettre</button>
             </div>
           </form>
         </div>
